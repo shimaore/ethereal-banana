@@ -1,0 +1,13 @@
+{
+  "name": "ethereal-banana",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "coffee-script": "^1.9.1",
+    "pouchdb": "^3.3.1",
+    "teacup": "^1.2.0"
+  },
+  "scripts": {
+    "push": "./node_modules/.bin/coffee ./install.coffee"
+  }
+}

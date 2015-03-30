@@ -1,0 +1,71 @@
+body {
+  font-family: "Gillius", sans-serif;
+  font-size: 11pt;
+}
+input {
+  border: none;
+  border-bottom: 1px solid #999;
+}
+tt {
+  font-family: "Inconsolata", fixed;
+  font-weight: bold;
+  font-size: 9pt;
+}
+
+#results {
+}
+
+.number {
+  margin: 3px;
+  padding: 20px;
+  border: 1px solid #999;
+}
+.lnum {
+  margin: 1px;
+}
+.gnum {
+  margin: 1px;
+}
+.endpoint {
+  margin: 1px;
+}
+.calls {
+  margin: 1px;
+  font-family: "Inconsolata", fixed;
+  font-size: 9pt;
+}
+
+/* trace.coffee */
+.packet span {
+  margin: 1px;
+  font-family: "Inconsolata", fixed;
+  font-size: 9pt;
+}
+.packet .time {
+  font-size: 7pt;
+}
+.packet .callid {
+  font-size: 7pt;
+  color: #aaa;
+}
+.packet .src {
+  color: red;
+}
+.packet .dst {
+  color: green;
+}
+.packet .from {
+  color: red;
+}
+.packet .to {
+  color: green;
+}
+.packet .method {
+  font-weight: bold;
+}
+.packet .status {
+  font-weight: bold;
+}
+.packet.split-true {
+  border-top: 1px solid #999;
+}
