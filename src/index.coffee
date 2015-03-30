@@ -12,6 +12,7 @@ module.exports = ->
       script type:'text/javascript', src:'assets/coffeecup.js'
       script type:'text/javascript', src:'assets/jquery-1.8.3.min.js'
       script type:'text/javascript', src:'assets/jquery.spin.js'
+      script type:'text/javascript', src:'assets/pouchdb-3.3.1.min.js'
       script type:'text/javascript', src:'assets/spin.min.js'
       script type:'text/javascript', src:'/socket.io/socket.io.js'
       script type:'text/coffeescript', src:'entry-to-local.coffee'
@@ -19,8 +20,9 @@ module.exports = ->
       script type:'text/coffeescript', src:'common.coffee'
       script type:'text/coffeescript', src:'gather.coffee'
       script type:'text/coffeescript', src:'trace.coffee'
-      script id='pkg', type:'application/json', JSON.stringify pkg
     body ->
       div id:"main", ->
         div id:"entry"
         div id:"results"
+      address ->
+        "This is #{pkg.name} #{pkg.version}."

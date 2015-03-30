@@ -14,6 +14,7 @@ files =
   assets/jquery.spin.js
   assets/jquery-1.8.3.min.js
   assets/coffeecup.js
+  assets/pouchdb-3.3.1.min.js
   src/index.css
   local/index.html
 
@@ -29,7 +30,7 @@ html = teacup.render require './src/index.coffee'
 fs.writeFileSync 'local/index.html', html
 
 it = db.put {_id}
-  .catch -> console.log 'ignored'
+  .catch (error) -> console.log "#{error} (ignored)"
 
 for f in files
   do (f) ->

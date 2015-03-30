@@ -114,28 +114,23 @@ get_response = (reference) ->
     <div id="traces">(no traces yet)</div>
   '''
 
-  $.ajax
-    type: 'GET'
-    url: '/logging/_all_docs'
-    dataType: 'json'
-    data:
-      startkey: JSON.stringify "trace:#{reference}:"
-      endkey: JSON.stringify "trace:#{reference};"
-      include_docs: true
-    error: ->
-      log 'Failed to retrieve trace documents'
-      $('#traces').html 'There was an error retrieving traces.'
-      log arguments
-    success: (data) ->
-      unless data?.rows?
-        return
+  db = new PouchDB "#{window.location.protocol}//#{window.location.host}/logging"
+  db.allDocs
+    startkey: "trace:#{reference}:"
+    endkey: "trace:#{reference};"
+    include_docs: true
+  .then ({rows}) ->
+    for row in rows
+      do (row) ->
+        doc = row.doc
 
-      for row in data.rows
-        do (row) ->
-          doc = row.doc
+        list_host doc, true
+        $('#traces').append display_host doc
 
-          list_host doc, true
-          $('#traces').append display_host doc
+  .catch (error) ->
+    log 'Failed to retrieve trace documents'
+    $('#traces').html 'There was an error retrieving traces.'
+    log error
 
 # Process response (callback)
 socket = io()
