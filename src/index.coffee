@@ -1,4 +1,4 @@
-{doctype,html,head,meta,title,link,script,body,div} = require 'teacup'
+{doctype,html,head,meta,title,link,script,body,div,address} = require 'teacup'
 pkg = require '../package.json'
 
 module.exports = ->
