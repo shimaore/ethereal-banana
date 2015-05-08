@@ -9,5 +9,26 @@
   },
   "scripts": {
     "push": "./node_modules/.bin/coffee ./install.coffee"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shimaore/ethereal-banana.git"
+  },
+  "description": "tools/support application (`nifty-ground` traces in CCNQ4) meant to be used with spicy-action's admin roles.",
+  "bugs": {
+    "url": "https://github.com/shimaore/ethereal-banana/issues"
+  },
+  "homepage": "https://github.com/shimaore/ethereal-banana",
+  "main": "index.js",
+  "dependencies": {
+    "pouchdb": "^3.3.1",
+    "teacup": "^1.2.0"
+  },
+  "keywords": [
+    "CCNQ",
+    "traces",
+    "nifty-ground"
+  ],
+  "author": "Stéphane Alnet <stephane@shimaore.net> (http://stephane.shimaore.net/)",
+  "license": "Unlicense (http://unlicense.org/)"
 }
