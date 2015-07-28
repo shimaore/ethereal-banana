@@ -145,7 +145,7 @@ $ ->
             registered = reg.username?
             html = """
             <div class="location #{if registered then 'registered' else 'not-registered'}">
-              Endpoint registration on #{reg.hostname}
+              Endpoint registration on #{reg.hostname ? reg.query_data?.hostname}
               <ul>
               <li>Endpoint: <tt>#{reg_username}@#{reg_domain}</tt></li>
               <li>Contact: <tt>#{reg.contact ? '(not registered)'}</tt></li>
