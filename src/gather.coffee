@@ -158,7 +158,7 @@ $ ->
             g4.data 'doc', reg
             $('.locations',nl).append g4
           socket.on 'location:response', display
-          socket.on 'location', display
+          socket.on 'location:update', display
           for domain in registration_domains
             do (domain) ->
               socket.emit 'location', "#{username}@#{domain}"
