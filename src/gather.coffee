@@ -145,10 +145,12 @@ $ ->
             registered = reg.username?
 
             now = new Date()
+            still = ''
             if reg.expires?
               still = new Date(reg.expires.replace ' ', 'T') - now
               still /= 1000
               still = " (#{still}s)"
+
             html = """
             <div class="location #{if registered then 'registered' else 'not-registered'}">
               Endpoint registration on #{reg.hostname ? reg.query_data?.hostname}
