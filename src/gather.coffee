@@ -1,6 +1,8 @@
 qs =
   escape: encodeURIComponent
 
+socket = io()
+
 $ ->
   log = -> console.log arguments...
 
@@ -70,7 +72,7 @@ $ ->
               </ul>
             </div>
             <div class="endpoint"></div>
-            <div class="location"></div>
+            <div class="locations"></div>
             <div class="calls"></div>
           </div>
           """
@@ -132,40 +134,34 @@ $ ->
         if gnum?
           last_calls nl, gnum
 
-        # Get endpoint status (from /_ccnq3/registration/:username)
-        ###
         if el_doc.endpoint?
-          $('.location',nl).spin()
-          $.ajax
-            type: 'GET'
-            url: "/_ccnq3/registration/#{qs.escape el_doc.endpoint}"
-            dataType: 'json'
-            error: ->
-              $('.location',nl).empty().html "(no location found for endpoint #{el_doc.endpoint})"
-              log "Failed to get location for endpoint = #{el_doc.endpoint}"
-            success: (doc) ->
-              $('.location',nl).empty()
-              html = """
-              <div class="location">
-              """
-              for reg in doc
-                html += """
-                  Endpoint registration:
-                  <ul>
-                  <li>Contact: <tt>#{reg.uri}</tt></li>
-                  <li>Valid for: <tt>#{reg.expires}</tt></li>
-                  <li>Received from: <tt>#{reg.received}</tt></li>
-                  <li>Call-ID: <tt>#{reg.callid}</tt></li>
-                  <li>User-Agent: <tt>#{reg.user_agent}</tt></li>
-                  </ul>
-                """
-              html += """
-              </div>
-              """
-              g4 = $ html
-              g4.data 'doc', doc
-              $('.location',nl).append g4
-        ###
+          [username,domain] = el_doc.endpoint.split '@'
+          $('.locations',nl).empty()
+          $('.locations',nl).spin()
+          display = (reg) ->
+            console.log reg
+            return unless reg.username is username
+            html = """
+            <div class="location">
+              Endpoint registration:
+              <ul>
+              <li>Endpoint: <tt>#{reg.username}@#{reg.domain}</tt></li>
+              <li>Contact: <tt>#{reg.contact}</tt></li>
+              <li>Valid for: <tt>#{reg.expires}</tt></li>
+              <li>Received from: <tt>#{reg.received}</tt></li>
+              <li>Call-ID: <tt>#{reg.callid}</tt></li>
+              <li>User-Agent: <tt>#{reg.user_agent}</tt></li>
+              </ul>
+            </div>
+            """
+            g4 = $ html
+            g4.data 'doc', reg
+            $('.locations',nl).append g4
+          socket.on 'location:response', display
+          socket.on 'location', display
+          socket.emit 'location', 'el_doc.endpoint'
+
+        null
     .catch (error) ->
       log "Failed to get numbers starting with #{value}: #{error}"
 
