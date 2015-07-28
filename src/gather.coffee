@@ -140,23 +140,24 @@ $ ->
           $('.locations',nl).spin()
           display = (reg) ->
             console.log reg
-            return unless reg.username is username
+            [reg_username,reg_domain] = reg._id.split '@'
+            return unless reg_username is username
             html = """
             <div class="location">
-              Endpoint registration:
+              Endpoint registration on #{reg.hostname}
               <ul>
-              <li>Endpoint: <tt>#{reg.username}@#{reg.domain}</tt></li>
-              <li>Contact: <tt>#{reg.contact}</tt></li>
-              <li>Valid for: <tt>#{reg.expires}</tt></li>
-              <li>Received from: <tt>#{reg.received}</tt></li>
-              <li>Call-ID: <tt>#{reg.callid}</tt></li>
-              <li>User-Agent: <tt>#{reg.user_agent}</tt></li>
+              <li>Endpoint: <tt>#{reg_username}@#{reg_domain}</tt></li>
+              <li>Contact: <tt>#{reg.contact ? '(not registered)'}</tt></li>
+              <li>Valid for: <tt>#{reg.expires ? '(none)'}</tt></li>
+              <li>Received from: <tt>#{reg.received ? '(none)'}</tt></li>
+              <li>Call-ID: <tt>#{reg.callid ? '(none)'}</tt></li>
+              <li>User-Agent: <tt>#{reg.user_agent ? '(none)'}</tt></li>
               </ul>
             </div>
             """
             g4 = $ html
             g4.data 'doc', reg
-            $('.locations',nl).append g4
+            $('.locations',nl).prepend g4
           socket.on 'location:response', display
           socket.on 'location:update', display
           for domain in registration_domains
