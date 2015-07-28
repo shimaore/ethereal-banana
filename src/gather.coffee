@@ -159,7 +159,9 @@ $ ->
             $('.locations',nl).append g4
           socket.on 'location:response', display
           socket.on 'location', display
-          socket.emit 'location', 'el_doc.endpoint'
+          for domain in registration_domains
+            do (domain) ->
+              socket.emit 'location', "#{username}@#{domain}"
 
         null
     .catch (error) ->

@@ -20,6 +20,7 @@ files =
 
   local/entry-to-local.coffee
   local/local-to-global.coffee
+  local/config.coffee
   '''
 
 files = files.split /\s+/
