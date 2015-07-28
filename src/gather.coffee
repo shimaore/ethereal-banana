@@ -143,13 +143,19 @@ $ ->
             [reg_username,reg_domain] = reg._id.split '@'
             return unless reg_username is username
             registered = reg.username?
+
+            now = new Date()
+            if reg.expires?
+              still = new Date(reg.expires) - now
+              still /= 1000
+              still = " (#{still}s)"
             html = """
             <div class="location #{if registered then 'registered' else 'not-registered'}">
               Endpoint registration on #{reg.hostname ? reg.query_data?.hostname}
               <ul>
               <li>Endpoint: <tt>#{reg_username}@#{reg_domain}</tt></li>
               <li>Contact: <tt>#{reg.contact ? '(not registered)'}</tt></li>
-              <li>Valid for: <tt>#{reg.expires ? '(none)'}</tt></li>
+              <li>Valid for: <tt>#{reg.expires ? '(none)'}</tt>#{still}</li>
               <li>Received from: <tt>#{reg.received ? '(none)'}</tt></li>
               <li>Call-ID: <tt>#{reg.callid ? '(none)'}</tt></li>
               <li>User-Agent: <tt>#{reg.user_agent ? '(none)'}</tt></li>
