@@ -71,8 +71,8 @@ tt {
 }
 
 .location.registered {
-  background-color: green;
+  background-color: #cfff94;
 }
 .location.not-registered {
-  background-color: red;
+  background-color: #ff9496;
 }
