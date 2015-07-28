@@ -72,8 +72,8 @@ $ ->
               </ul>
             </div>
             <div class="endpoint"></div>
-            <div class="locations"></div>
             <div class="calls"></div>
+            <div class="locations"></div>
           </div>
           """
           doc.gnum = gnum
@@ -142,8 +142,9 @@ $ ->
             console.log reg
             [reg_username,reg_domain] = reg._id.split '@'
             return unless reg_username is username
+            registered = reg.username?
             html = """
-            <div class="location">
+            <div class="location #{if registered then 'registered' else 'not-registered'}">
               Endpoint registration on #{reg.hostname}
               <ul>
               <li>Endpoint: <tt>#{reg_username}@#{reg_domain}</tt></li>
@@ -157,7 +158,10 @@ $ ->
             """
             g4 = $ html
             g4.data 'doc', reg
-            $('.locations',nl).prepend g4
+            if registered
+              $('.locations',nl).prepend g4
+            else
+              $('.locations',nl).append g4
           socket.on 'location:response', display
           socket.on 'location:update', display
           for domain in registration_domains

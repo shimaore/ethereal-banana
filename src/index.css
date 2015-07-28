@@ -69,3 +69,10 @@ tt {
 .packet.split-true {
   border-top: 1px solid #999;
 }
+
+.location.registered {
+  background-color: green;
+}
+.location.not-registered {
+  background-color: red;
+}
