@@ -146,7 +146,7 @@ $ ->
 
             now = new Date()
             if reg.expires?
-              still = new Date(reg.expires) - now
+              still = new Date(reg.expires.replace ' ', 'T') - now
               still /= 1000
               still = " (#{still}s)"
             html = """
