@@ -6,7 +6,7 @@ log = -> console.log arguments...
 display_host = (doc) ->
   el_host = $ """
     <div>
-      <h2 class="host"><a name="#{doc.host}">#{doc.host}</a></h2>
+      <h2 class="host"><a name="##{doc.reference}/{doc.host}">#{doc.host}</a></h2>
       <div>#{doc.from_user ? '(any)'} → #{doc.to_user ? '(any)'} / #{doc.call_id ? '(any)'} / #{doc.days_ago ? '(any)'} days ago.</div>
     </div>
   """
@@ -76,11 +76,11 @@ pcap_link = coffeecup.compile ->
   a href: "/logging/trace:#{@reference}:#{@host}/packets.pcap", ->
     'Download (PCAP)'
 
-format_host_link = (h,v) ->
+format_host_link = (h,v,r) ->
   switch v
     when true
       """
-        <a href="##{h}">#{h}</a>
+        <a href="##{r}/#{h}">#{h}</a>
       """
     when false
       """
@@ -107,7 +107,7 @@ list_host = (doc,good) ->
   processed_host[doc.host] = good
   $('#hosts').html 'Hosts: '
   for h in Object.keys(processed_host).sort()
-    $('#hosts').append "  #{format_host_link h, processed_host[h]}"
+    $('#hosts').append "  #{format_host_link h, processed_host[h], doc.reference}"
 
 get_response = (reference) ->
   $('#results').html '''
@@ -317,8 +317,8 @@ show_query = ->
   return
 
 $ ->
-  if window.location.hash? and window.location.hash.match /^#r[\d.]+$/
-    reference = window.location.hash.substr 1
+  if window.location.hash? and m = window.location.hash.match /^#(r[\d.]+)/
+    reference = m[1]
     get_response reference
   else
     do show_query
