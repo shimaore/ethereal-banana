@@ -76,3 +76,11 @@ tt {
 .location.not-registered {
   background-color: #ff9496;
 }
+
+.query {
+  font-size: small;
+}
+
+h2 {
+  margin-bottom: 0.2ex;
+}
