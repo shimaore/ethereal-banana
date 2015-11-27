@@ -7,6 +7,7 @@ display_host = (doc) ->
   el_host = $ """
     <div>
       <h2 class="host"><a name="#{doc.host}">#{doc.host}</a></h2>
+      <div>#{doc.from_user ? '(any)'} → #{doc.to_user ? '(any)'} / #{doc.call_id ? '(any)'} / #{doc.days_ago ? '(any)'} days ago.</div>
     </div>
   """
   el_host.data 'doc', doc
