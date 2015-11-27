@@ -47,12 +47,19 @@ display_host = (doc) ->
 
   el_host
 
+palette = {}
+next_palette = 0
+get_palette = (call_id) ->
+  if palette[call_id]?
+    "palette_#{palette[call_id]}"
+  else
+    "palette_#{palette[call_id] = next_palette++}"
+
 sip_request = coffeecup.compile ->
-  div class:"packet request split-#{@is_new}", ->
+  call_id = @['sip.Call-ID']
+  div class:"packet request split-#{@is_new} #{@get_palette call_id}", ->
     span class:"time",  -> @['frame.time']
     span ' '
-    # span class:"callid", -> @['sip.Call-ID']
-    # span ' '
     span class:"src",   -> @['ip.src']+':'+ (@['udp.srcport'] ? @['tcp.srcport'])
     span ' → '
     span class:"dst",   -> @['ip.dst']+':'+ (@['udp.dstport'] ? @['tcp.dstport'])
@@ -66,11 +73,10 @@ sip_request = coffeecup.compile ->
     span class:"ruri",  -> @['sip.r-uri.user']+'@'+@['sip.r-uri.host']
 
 sip_response = coffeecup.compile ->
-  div class:"packet response split-#{@is_new}", ->
+  call_id = @['sip.Call-ID']
+  div class:"packet response split-#{@is_new} #{@get_palette call_id}", ->
     span class:"time",  -> @['frame.time']
     span ' '
-    # span class:"callid", -> @['sip.Call-ID']
-    # span ' '
     span class:"dst",   -> @['ip.dst']+':'+ (@['udp.dstport'] ? @['tcp.dstport'])
     span ' ← '
     span class:"src",   -> @['ip.src']+':'+ (@['udp.srcport'] ? @['tcp.srcport'])
@@ -102,6 +108,7 @@ format_host_link = (h,v,r) ->
 
 display_packets = (root,packets) ->
   for packet in packets
+    packet.get_palette = get_palette
     if packet["sip.Method"]
       el = $ sip_request packet
     else
