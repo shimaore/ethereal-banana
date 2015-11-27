@@ -50,27 +50,36 @@ display_host = (doc) ->
 sip_request = coffeecup.compile ->
   div class:"packet request split-#{@is_new}", ->
     span class:"time",  -> @['frame.time']
-    span class:"callid", -> @['sip.Call-ID']
+    span ' '
+    # span class:"callid", -> @['sip.Call-ID']
+    # span ' '
     span class:"src",   -> @['ip.src']+':'+ (@['udp.srcport'] ? @['tcp.srcport'])
-    span '→'
+    span ' → '
     span class:"dst",   -> @['ip.dst']+':'+ (@['udp.dstport'] ? @['tcp.dstport'])
-    span class:"method", title:h(@['sip.Request-Line'] ? ''), -> @['sip.Method']
-    span class:"ruri",  -> @['sip.r-uri.user']+'@'+@['sip.r-uri.host']
+    span ' '
     span class:"from", title: h(@['sip.From'] ? ''), -> @['sip.from.user']
-    span '→'
+    span ' → '
     span class:"to", title:h(@['sip.To'] ? ''), -> @['sip.to.user']
+    span ' '
+    span class:"method", title:h(@['sip.Request-Line'] ? ''), -> @['sip.Method']
+    span ' '
+    span class:"ruri",  -> @['sip.r-uri.user']+'@'+@['sip.r-uri.host']
 
 sip_response = coffeecup.compile ->
   div class:"packet response split-#{@is_new}", ->
     span class:"time",  -> @['frame.time']
-    span class:"callid", -> @['sip.Call-ID']
+    span ' '
+    # span class:"callid", -> @['sip.Call-ID']
+    # span ' '
     span class:"dst",   -> @['ip.dst']+':'+ (@['udp.dstport'] ? @['tcp.dstport'])
-    span '←'
+    span ' ← '
     span class:"src",   -> @['ip.src']+':'+ (@['udp.srcport'] ? @['tcp.srcport'])
-    span class:"status", title:h(@['sip.Status-Line'] ? ''), -> @['sip.Status-Code']
+    span ' '
     span class:"from", title:h(@['sip.From'] ? ''), -> @['sip.from.user']
-    span '←'
+    span ' ← '
     span class:"to", title:h(@['sip.To'] ? ''), -> @['sip.to.user']
+    span ' '
+    span class:"status", title:h(@['sip.Status-Line'] ? ''), -> @['sip.Status-Code']
 
 pcap_link = coffeecup.compile ->
   a href: "/logging/trace:#{@reference}:#{@host}/packets.pcap", ->
