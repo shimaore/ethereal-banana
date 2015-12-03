@@ -85,6 +85,10 @@ h2 {
   margin-bottom: 0.2ex;
 }
 
+.current {
+  font-weight: bold;
+}
+
 .palette_0 { background-color: #ffbc99; }
 .palette_1 { background-color: #ffc899; }
 .palette_2 { background-color: #ffd399; }

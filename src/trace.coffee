@@ -29,6 +29,15 @@ display_host = (doc) ->
 
     el_packets = $ "<div><button>Show all #{len} packets</button></div>"
 
+    current = 0
+    if m = window.location.hash?.match /// ^# (?:[^/]+) / (?:[^/]+) / (\d+) ///
+      current = parseInt m[1]
+    for packet,i in doc.packets
+      packet.number = i+1
+      packet.reference = doc.reference
+      packet.host = doc.host
+      packet.current = packet.number is current
+
     limit = 50
     if len > limit
       el_packets.children('button').click ->
@@ -57,8 +66,11 @@ get_palette = (call_id) ->
 
 sip_request = coffeecup.compile ->
   call_id = @['sip.Call-ID']
-  div class:"packet request split-#{@is_new} #{@get_palette call_id}", ->
-    span class:"time",  -> @['frame.time']
+  link = "#{@reference}/#{@host}/#{@number}"
+  a name:link
+  div class:"packet request split-#{@is_new} #{@get_palette call_id} #{if packet.current then 'current' else ''}", ->
+    a href:"##{link}", ->
+      span class:"time",  -> @['frame.time']
     span ' '
     span class:"src",   -> @['ip.src']+':'+ (@['udp.srcport'] ? @['tcp.srcport'])
     span ' → '
@@ -74,8 +86,11 @@ sip_request = coffeecup.compile ->
 
 sip_response = coffeecup.compile ->
   call_id = @['sip.Call-ID']
-  div class:"packet response split-#{@is_new} #{@get_palette call_id}", ->
-    span class:"time",  -> @['frame.time']
+  link = "#{@reference}/#{@host}/#{@number}"
+  a name:link
+  div class:"packet response split-#{@is_new} #{@get_palette call_id} #{if packet.current then 'current' else ''}", ->
+    a href:"##{link}", ->
+      span class:"time",  -> @['frame.time']
     span ' '
     span class:"dst",   -> @['ip.dst']+':'+ (@['udp.dstport'] ? @['tcp.dstport'])
     span ' ← '
