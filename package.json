@@ -1,6 +1,6 @@
 {
   "name": "ethereal-banana",
-  "version": "1.5.0-1",
+  "version": "1.5.0-2",
   "private": true,
   "devDependencies": {
     "coffee-script": "^1.9.1",
