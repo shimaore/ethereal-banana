@@ -86,7 +86,7 @@ h2 {
 }
 
 .current {
-  font-weight: bold;
+  border: thick solid rgba(255,255,0,0.5);
 }
 
 .palette_0 { background-color: #ffbc99; }
