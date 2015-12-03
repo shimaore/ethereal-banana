@@ -68,7 +68,7 @@ sip_request = coffeecup.compile ->
   call_id = @['sip.Call-ID']
   link = "#{@reference}/#{@host}/#{@number}"
   a name:link
-  div class:"packet request split-#{@is_new} #{@get_palette call_id} #{if packet.current then 'current' else ''}", ->
+  div class:"packet request split-#{@is_new} #{@get_palette call_id} #{if @current then 'current' else ''}", ->
     a href:"##{link}", ->
       span class:"time",  -> @['frame.time']
     span ' '
@@ -88,7 +88,7 @@ sip_response = coffeecup.compile ->
   call_id = @['sip.Call-ID']
   link = "#{@reference}/#{@host}/#{@number}"
   a name:link
-  div class:"packet response split-#{@is_new} #{@get_palette call_id} #{if packet.current then 'current' else ''}", ->
+  div class:"packet response split-#{@is_new} #{@get_palette call_id} #{if @current then 'current' else ''}", ->
     a href:"##{link}", ->
       span class:"time",  -> @['frame.time']
     span ' '
