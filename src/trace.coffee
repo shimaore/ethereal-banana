@@ -69,8 +69,9 @@ sip_request = coffeecup.compile ->
   link = "#{@reference}/#{@host}/#{@number}"
   a name:link
   div class:"packet request split-#{@is_new} #{@get_palette call_id} #{if @current then 'current' else ''}", ->
-    a href:"##{link}", ->
-      span class:"time",  -> @['frame.time']
+    a href:"##{link}", -> @number
+    span ' '
+    span class:"time",  -> @['frame.time']
     span ' '
     span class:"src",   -> @['ip.src']+':'+ (@['udp.srcport'] ? @['tcp.srcport'])
     span ' → '
@@ -89,8 +90,9 @@ sip_response = coffeecup.compile ->
   link = "#{@reference}/#{@host}/#{@number}"
   a name:link
   div class:"packet response split-#{@is_new} #{@get_palette call_id} #{if @current then 'current' else ''}", ->
-    a href:"##{link}", ->
-      span class:"time",  -> @['frame.time']
+    a href:"##{link}", -> @number
+    span ' '
+    span class:"time",  -> @['frame.time']
     span ' '
     span class:"dst",   -> @['ip.dst']+':'+ (@['udp.dstport'] ? @['tcp.dstport'])
     span ' ← '
