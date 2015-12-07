@@ -4,10 +4,13 @@ qs =
 log = -> console.log arguments...
 
 display_host = (doc) ->
+  user = doc.from_user ? '(any)'
+  if doc.from_user isnt doc.to_user
+    user += " / #{doc.to_user ? '(any)'}"
   el_host = $ """
     <div>
       <h2 class="host"><a name="#{doc.reference}/#{doc.host}">#{doc.host}</a></h2>
-      <p class="query">#{doc.from_user ? '(any)'} → #{doc.to_user ? '(any)'} / #{doc.call_id ? '(any)'} / #{doc.days_ago ? '(any)'} days ago.</p>
+      <p class="query">#{user} / #{doc.call_id ? '(any)'} / #{doc.days_ago ? '(any)'} days ago.</p>
     </div>
   """
   el_host.data 'doc', doc
@@ -229,17 +232,13 @@ show_query = ->
   $('#entry').append '''
     <form id="trace">
       Trace
-      <label>From
-        <input type="tel" name="from_user" id="from_user" size="16" />
+      <label>Number:
+        <input type="tel" name="user" id="user" size="16" />
       </label>
-      →
-      <label>To
-        <input type="tel" name="to_user" id="to_user" size="16" />
-      </label>
-      <label>Call-ID
+      <label>Call-ID:
         <input type="text" name="call_id" id="call_id" />
       </label>
-      <label>IP
+      <label>IP:
         <input type="text" name="ip" id="ip" />
       </label>
       <label>
@@ -252,7 +251,7 @@ show_query = ->
   '''
 
   t = null
-  $('body').on 'keyup', '#from_user', ->
+  $('body').on 'keyup', '#user', ->
     # Throttle
     if t? then clearTimeout t
     t = setTimeout run, 250
@@ -263,16 +262,16 @@ show_query = ->
     limit = $('#limit').val()
 
     # Cleanup parameters
-    from_user = $('#from_user').val()
-    if from_user? and from_user isnt ''
-      from_user = from_user.replace /[^\d]+/g, ''
-      from_user = entry_to_local from_user
-    if not from_user? or from_user is ''
-      from_user = null
+    user = $('#user').val()
+    if user? and user isnt ''
+      user = user.replace /[^\d]+/g, ''
+      user = entry_to_local user
+    if not user? or user is ''
+      user = null
 
-    return unless from_user?
+    return unless user?
 
-    last_calls $('#trace'), from_user
+    last_calls $('#trace'), user
 
   # Handle form submission
   t = null
@@ -284,19 +283,12 @@ show_query = ->
     reference = 'r'+Math.random()
 
     # Cleanup parameters
-    from_user = $('#from_user').val()
-    if from_user? and from_user isnt ''
-      from_user = from_user.replace /[^\d]+/g, ''
-      from_user = entry_to_local from_user
-    if not from_user? or from_user is ''
-      from_user = null
-
-    to_user = $('#to_user').val()
-    if to_user
-      to_user = to_user.replace /[^\d]+/g, ''
-      to_user = entry_to_local to_user
-    if not to_user or to_user is ''
-      to_user = null
+    user = $('#user').val()
+    if user
+      user = user.replace /[^\d]+/g, ''
+      user = entry_to_local user
+    if not user or user is ''
+      user = null
 
     call_id = $('#call_id').val()
     if call_id? and call_id isnt ''
@@ -316,7 +308,7 @@ show_query = ->
     if not days_ago or days_ago is ''
       days_ago = null
 
-    unless from_user? or to_user? or call_id? or ip?
+    unless user? or call_id? or ip?
       alert 'You must enter a criteria.'
       return
 
@@ -327,8 +319,8 @@ show_query = ->
 
     # Send request
     request = {reference}
-    request.from_user = from_user if from_user?
-    request.to_user   = to_user   if to_user?
+    request.from_user = user      if user?
+    request.to_user   = user      if user?
     request.call_id   = call_id   if call_id?
     request.ip        = ip        if ip?
     request.days_ago  = days_ago  if days_ago?

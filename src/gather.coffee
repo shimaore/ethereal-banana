@@ -6,20 +6,8 @@ socket = io()
 $ ->
   log = -> console.log arguments...
 
-  $('#entry').append '''
-    <div id="tool-retrieve">
-      Retrieve
-      <label>Number:
-        <input type="tel" name="number" id="number" size="16" />
-      </label>
-      <label>Endpoint:
-        <input type="text" name="endpoint" id="endpoint" disabled />
-      </label>
-    </div>
-  '''
-
   t = null
-  $('body').on 'keyup', '#number', ->
+  $('body').on 'keyup', '#user', ->
     # Throttle
     if t? then clearTimeout t
     t = setTimeout run, 750
@@ -32,7 +20,7 @@ $ ->
     limit = $('#limit').val() or 3
 
     # Value will be the national part of the number
-    value = $('#number').val().replace /[^\d]+/g, ''
+    value = $('#user').val().replace /[^\d]+/g, ''
     value = entry_to_local value
     return unless value?
 
