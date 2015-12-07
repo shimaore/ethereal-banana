@@ -231,7 +231,6 @@ show_query = ->
   # Add HTML form for query
   $('#entry').append '''
     <form id="trace">
-      Trace
       <label>Number:
         <input type="tel" name="user" id="user" size="16" />
       </label>
