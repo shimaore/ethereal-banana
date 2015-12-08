@@ -232,7 +232,7 @@ show_query = ->
   $('#entry').append '''
     <form id="trace">
       <label>Number:
-        <input type="tel" name="user" id="user" size="16" />
+        <input type="tel" name="user" id="user" size="16" class="focus" />
       </label>
       <label>Call-ID:
         <input type="text" name="call_id" id="call_id" />
@@ -248,6 +248,7 @@ show_query = ->
     </form>
     <div class="calls"></div>
   '''
+  $('.focus').focus()
 
   t = null
   $('body').on 'keyup', '#user', ->
