@@ -1,7 +1,7 @@
 qs =
   escape: encodeURIComponent
 
-socket = io()
+socket = window.the_socket
 
 $ ->
   log = -> console.log arguments...
@@ -54,7 +54,7 @@ $ ->
               Transfers:
               <ul>
                 <li>all calls: <tt>#{doc.cfa ? ''}</tt></li>
-                <li>on busy: <tt>#{doc.cdb ? ''}</tt></li>
+                <li>on busy: <tt>#{doc.cfb ? ''}</tt></li>
                 <li>no response: <tt>#{doc.cfda ? ''}</tt></li>
                 <li>not registered: <tt>#{doc.cfnr ? ''}</tt></li>
               </ul>

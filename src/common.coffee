@@ -37,3 +37,34 @@ window.last_calls = (nl,gnum,limit = 20) ->
   .catch (error) ->
     $('.calls',nl).empty().html "(no calls found for global number #{gnum}: #{error})"
   return
+
+window.the_socket = socket = io()
+
+zappa_prefix = '/zappa'
+zappa_channel = '__local'
+
+share = (channel_name,socket,next) ->
+  zappa_prefix = zappa_prefix ? ""
+  socket_id = socket.id
+  if not socket_id?
+    console.log "Missing socket_id"
+    next? false
+    return
+  $.getJSON "#{zappa_prefix}/socket/#{channel_name}/#{socket_id}"
+  .done ({key}) ->
+    if key?
+      console.log "Sending key #{key}"
+      socket.emit '__zappa_key', {key}, next
+    else
+      console.log "Missing key: #{arguments}"
+      next? false
+  .fail ->
+    next? false
+
+socket.on 'connect', ->
+  share zappa_channel, socket, (ok) ->
+    console.log {ok}
+    socket.emit 'join'
+
+socket.on 'ready', ({roles}) ->
+  console.log {roles}
