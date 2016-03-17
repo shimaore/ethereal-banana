@@ -49,16 +49,6 @@ $ ->
               <li>Number: <tt>#{number}</tt></li>
               <li>Domain: <tt>#{domain ? '(global number)'}</tt></li>
             </ul>
-            <div class="gnum"></div>
-            <div class="lnum">
-              Transfers:
-              <ul>
-                <li>all calls: <tt>#{doc.cfa ? ''}</tt></li>
-                <li>on busy: <tt>#{doc.cfb ? ''}</tt></li>
-                <li>no response: <tt>#{doc.cfda ? ''}</tt></li>
-                <li>not registered: <tt>#{doc.cfnr ? ''}</tt></li>
-              </ul>
-            </div>
             <div class="endpoint"></div>
             <div class="calls"></div>
             <div class="locations"></div>
