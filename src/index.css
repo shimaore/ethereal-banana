@@ -31,8 +31,26 @@ tt {
 }
 .calls {
   margin: 1px;
+  margin-top: 10px;
   font-family: "Inconsolata", fixed;
   font-size: 9pt;
+  background-color: #fff0ff;
+}
+.calls-client {
+  margin: 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-family: sans-serif;
+  font-size: 9pt;
+  background-color: #f0fff0;
+}
+.call {
+  margin-top: 3px;
+}
+.call-quality {
+  margin-top: 1px;
+  margin-left: 10px;
+  font-family: sans-serif;
 }
 
 /* trace.coffee */

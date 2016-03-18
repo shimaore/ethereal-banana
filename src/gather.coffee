@@ -51,6 +51,7 @@ $ ->
             </ul>
             <div class="endpoint"></div>
             <div class="calls"></div>
+            <div class="calls-client"></div>
             <div class="locations"></div>
           </div>
           """
