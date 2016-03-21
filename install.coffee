@@ -9,18 +9,19 @@ files =
   src/trace.coffee
   src/common.coffee
   src/gather.coffee
+  src/index.css
+  local/index.html
+  local/entry-to-local.coffee
+  local/local-to-global.coffee
+  local/config.coffee
+
   assets/coffee-script.js
   assets/spin.min.js
   assets/jquery.spin.js
   assets/jquery-1.8.3.min.js
   assets/coffeecup.js
   assets/pouchdb-3.3.1.min.js
-  src/index.css
-  local/index.html
 
-  local/entry-to-local.coffee
-  local/local-to-global.coffee
-  local/config.coffee
   '''
 
 files = files.split /\s+/
