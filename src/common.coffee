@@ -47,16 +47,17 @@ window.last_calls = (nl,gnum,limit = 20) ->
       do (row) ->
         doc = row.doc
         # FIXME: Add link to generate a trace based on to/from
+        v = doc.variables
         g3 = $ """
         <div class="call">
           <a href="/_utils/document.html?cdrs/#{doc._id}">
-          #{doc.variables.start_stamp}
+          #{v.start_stamp}
           </a>
-          (#{doc.variables.ccnq_direction}, #{doc.variables.ccnq_profile})
-          #{doc.variables.ccnq_from_e164} → #{doc.variables.ccnq_to_e164}
-          (billable: #{doc.variables.billsec}s,
-           total: #{doc.variables.duration}s,
-           #{doc.variables.hangup_cause})
+          (#{v.ccnq_direction}, #{v.ccnq_profile})
+          #{v.ccnq_from_e164} → #{v.ccnq_to_e164}
+          (billable: #{v.billsec}s,
+           total: #{v.duration}s,
+           #{v.hangup_cause})
         </div>
         """
         g3.data 'doc', doc
