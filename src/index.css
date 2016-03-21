@@ -43,14 +43,21 @@ tt {
   font-size: 9pt;
 }
 .call {
-  margin-top: 3px;
+  margin-top: 1px;
+  padding: 3px;
 }
 
 .call.ingress {
-  background-color: #dfbb17;
+  background-color: #ffd61a;
 }
 .call.egress {
-  background-color: #dc903d;
+  background-color: #ffa747;
+}
+.failure {
+  background-color: #dc2e39;
+  color: white;
+  font-weight: bold;
+  padding: 1px;
 }
 
 .call-quality {

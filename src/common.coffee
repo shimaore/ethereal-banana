@@ -95,8 +95,9 @@ window.last_calls = (nl,gnum,limit = 20) ->
           <a href="/_utils/document.html?cdrs-client/#{doc._id}">
           #{v.start_stamp}
           </a>
-          (#{v.ccnq_direction}, #{v.ccnq_profile})
+          (#{v.ccnq_direction})
           <b>#{v.ccnq_from_e164}</b> → <b>#{v.ccnq_to_e164}</b>
+          <span class="failure">#{v.sip_invite_failure_status ? ''} #{v.sip_invite_failure_phrase ? ''}</span>
           (billable: #{v.billsec}s,
            progress: <b>#{v.progresssec}s</b>,
            answer: #{v.answersec}s,
@@ -106,9 +107,7 @@ window.last_calls = (nl,gnum,limit = 20) ->
            #{v.endpoint_disposition}
            #{v.sip_hangup_disposition}
            #{v.sip_hangup_phrase ? ''}
-           #{v.sip_invite_failure_status ? ''} #{v.sip_invite_failure_phrase ? ''}
-        </div>
-        <div class="call-quality">
+          <div class="call-quality">
           Quality:
             <b>#{v.rtp_audio_in_mos}</b>
             (in:
@@ -131,6 +130,7 @@ window.last_calls = (nl,gnum,limit = 20) ->
             #{v.rtp_audio_out_dtmf_packet_count} dtmf
             #{v.rtp_audio_out_cng_packet_count} cng
             )
+          </div>
         </div>
         """
         g3.data 'doc', doc
