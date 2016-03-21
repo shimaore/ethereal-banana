@@ -105,7 +105,7 @@ window.last_calls = (nl,gnum,limit = 20) ->
            #{v.endpoint_disposition}
            #{v.sip_hangup_disposition}
            #{v.sip_hangup_phrase}
-           #{v.sip_invite_failure_status} #{sip_invite_failure_phrase}
+           #{v.sip_invite_failure_status} #{v.sip_invite_failure_phrase}
         </div>
         <div class="call-quality">
           Quality:
