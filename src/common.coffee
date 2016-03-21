@@ -49,7 +49,7 @@ window.last_calls = (nl,gnum,limit = 20) ->
         # FIXME: Add link to generate a trace based on to/from
         v = doc.variables
         g3 = $ """
-        <div class="call">
+        <div class="call #{v.ccnq_direction}">
           <a href="/_utils/document.html?cdrs/#{doc._id}">
           #{v.start_stamp}
           </a>
@@ -91,7 +91,7 @@ window.last_calls = (nl,gnum,limit = 20) ->
         # FIXME: Add link to generate a trace based on to/from
         v = doc.variables
         g3 = $ """
-        <div class="call">
+        <div class="call #{v.ccnq_direction}">
           <a href="/_utils/document.html?cdrs-client/#{doc._id}">
           #{v.start_stamp}
           </a>
