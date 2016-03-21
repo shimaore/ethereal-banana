@@ -258,7 +258,6 @@ show_query = ->
     user = $('#user').val()
     if user
       user = user.replace /[^\d]+/g, ''
-      user = entry_to_local user
     if not user or user is ''
       user = null
 
