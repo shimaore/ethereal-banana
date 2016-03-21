@@ -36,7 +36,7 @@ global_call = (row) ->
   </div>
   """
   g3.data 'doc', doc
-  $('.calls',nl).append g3
+  g3
 
 local_call = (row) ->
   doc = row.doc
@@ -86,14 +86,10 @@ local_call = (row) ->
   </div>
   """
   g3.data 'doc', doc
-  $('.calls-client',nl).append g3
+  g3
 
-window.last_calls = (nl,gnum,limit = 20) ->
-  $('.calls',nl).spin()
-
+run_global = (nl,gnum,limit) ->
   db = new PouchDB "#{window.location.protocol}//#{window.location.host}/cdrs"
-  dbl = new PouchDB "#{window.location.protocol}//#{window.location.host}/cdrs-client"
-
   db
   .put addon
   .catch -> true
@@ -106,21 +102,25 @@ window.last_calls = (nl,gnum,limit = 20) ->
       descending: true
       stale: 'update_after'
   .then ({rows}) ->
-    $('.calls',nl).empty()
-    $('.calls',nl).append "<div>Last #{limit} calls:</div>"
+    $('.calls',nl)
+      .empty()
+      .append "<div>Last #{limit} calls (global/carrier side):</div>"
     unless rows?
       $('.calls',nl).append '(none found)'
       return
 
     for row in rows
-      global_call row
+      do (row) ->
+        $('.calls',nl).append global_call row
     return
   .catch (error) ->
     $('.calls',nl).empty().html "(no calls found for global number #{gnum}: #{error})"
 
-  .then ->
-    dbl
-    .put addon
+run_local = (nl,gnum,limit) ->
+  dbl = new PouchDB "#{window.location.protocol}//#{window.location.host}/cdrs-client"
+
+  dbl
+  .put addon
   .catch -> true
   .then ->
     dbl.query 'addon/cdr_by_number',
@@ -131,17 +131,26 @@ window.last_calls = (nl,gnum,limit = 20) ->
       descending: true
       stale: 'update_after'
   .then ({rows}) ->
-    $('.calls-client',nl).empty()
-    $('.calls-client',nl).append "<div>Last #{limit} calls:</div>"
+    $('.calls-client',nl)
+      .empty()
+      .append "<div>Last #{limit} calls (local/client side):</div>"
     unless rows?
       $('.calls-client',nl).append '(none found)'
       return
 
     for row in rows
-      local_call row
+      do (row) ->
+        $('.calls-client',nl).append local_call row
     return
   .catch (error) ->
     $('.calls-client',nl).empty().html "(no calls found for global number #{gnum}: #{error})"
+
+window.last_calls = (nl,gnum,limit = 20) ->
+  $('.calls',nl).spin()
+
+  run_global nl, gnum, limit
+  run_local nl, gnum, limit
+
   return
 
 window.the_socket = socket = io()
