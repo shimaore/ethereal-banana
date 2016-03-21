@@ -132,7 +132,8 @@ $ ->
 
             html = """
             <div class="location #{if registered then 'registered' else 'not-registered'}">
-              Endpoint registration on #{reg.hostname ? reg.query_data?.hostname}
+              Endpoint registration on #{reg.hostname ? reg.query_data?.hostname}:
+            """ + (if registered then """
               <ul>
               <li>Endpoint: <tt>#{reg_username}@#{reg_domain}</tt></li>
               <li>Contact: <tt>#{reg.contact ? '(not registered)'}</tt></li>
@@ -141,6 +142,7 @@ $ ->
               <li>Call-ID: <tt>#{reg.callid ? '(none)'}</tt></li>
               <li>User-Agent: <tt>#{reg.user_agent ? '(none)'}</tt></li>
               </ul>
+            """ else ' not registered') + """
             </div>
             """
             g4 = $ html
