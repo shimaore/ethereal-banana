@@ -14,14 +14,12 @@ files =
   local/entry-to-local.coffee
   local/local-to-global.coffee
   local/config.coffee
-
   assets/coffee-script.js
   assets/spin.min.js
   assets/jquery.spin.js
   assets/jquery-1.8.3.min.js
   assets/coffeecup.js
   assets/pouchdb-3.3.1.min.js
-
   '''
 
 files = files.split /\s+/
