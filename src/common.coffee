@@ -99,8 +99,11 @@ window.last_calls = (nl,gnum,limit = 20) ->
           (billable: #{v.billsec}s,
            progress: <b>#{v.progresssec}s</b>,
            answer: #{v.answersec}s,
-           total: #{v.duration}s,
-           #{v.hangup_cause}/#{v.originate_disposition}/#{v.endpoint_disposition}/#{v.sip_hangup_disposition})
+           total: #{v.duration}s)
+           #{v.hangup_cause}
+           #{v.originate_disposition}
+           #{v.endpoint_disposition}
+           #{v.sip_hangup_disposition}
         </div>
         <div class="call-quality">
           Quality:
