@@ -194,8 +194,10 @@ socket.on 'trace_error', ({host,in_reply_to,error}) ->
 our_reference = null
 send_request = (request,cb) ->
   our_reference = request.reference
-  socket.emit 'trace', request
-  cb?()
+  socket.emit 'join', "trace:#{our_reference}", ->
+    socket.emit 'trace', request
+    cb?()
+    return
   return
 
 show_query = ->
