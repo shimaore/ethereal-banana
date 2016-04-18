@@ -173,21 +173,21 @@ get_response = (reference) ->
 socket = window.the_socket
 
 socket.on 'trace_started', ({host,in_reply_to}) ->
-  console.log 'trace started'
-  console.log {host,in_reply_to}
+  log 'trace started'
+  log {host,in_reply_to}
   if in_reply_to.reference is our_reference
     list_host {host}, null
 
 socket.on 'trace_completed', ({host,in_reply_to}) ->
-  console.log 'trace completed'
-  console.log {host,in_reply_to}
+  log 'trace completed'
+  log {host,in_reply_to}
   if in_reply_to.reference is our_reference
     list_host {host}, true
     $('#traces').append display_host in_reply_to
 
 socket.on 'trace_error', ({host,in_reply_to,error}) ->
-  console.log 'trace error'
-  console.log {host,in_reply_to,error}
+  log 'trace error'
+  log {host,in_reply_to,error}
   if in_reply_to.reference is our_reference
     list_host {host}, false
 

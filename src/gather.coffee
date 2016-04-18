@@ -34,7 +34,7 @@ $ ->
       limit:limit
       include_docs: true
     .then ({rows}) ->
-      log rows
+      log {rows}
       return unless rows?
       $('#results').empty()
       for row in rows
@@ -118,7 +118,7 @@ $ ->
           $('.locations',nl).empty()
           $('.locations',nl).spin()
           display = (reg) ->
-            console.log reg
+            log {reg}
             [reg_username,reg_domain] = reg._id.split '@'
             return unless reg_username is username
             registered = reg.username?
