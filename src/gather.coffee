@@ -155,7 +155,8 @@ $ ->
           socket.on 'location:update', display
           for domain in registration_domains
             do (domain) ->
-              socket.emit 'location', "#{username}@#{domain}"
+              socket.emit 'join', "endpoint:#{username}@#{domain}", ->
+                socket.emit 'location', "#{username}@#{domain}"
 
         null
     .catch (error) ->

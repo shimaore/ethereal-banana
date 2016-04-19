@@ -183,6 +183,9 @@ socket.on 'connect', ->
     log {ok}
     socket.emit 'join'
 
+socket.on 'welcome', (data) ->
+  log data
+
 socket.on 'ready', ({roles}) ->
   log {roles}
 
