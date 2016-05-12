@@ -3,9 +3,7 @@
   "version": "3.1.0",
   "private": true,
   "devDependencies": {
-    "coffee-script": "^1.9.1",
-    "pouchdb": "^3.3.1",
-    "teacup": "^1.2.0"
+    "coffee-script": "^1.10.0"
   },
   "scripts": {
     "push": "./node_modules/.bin/coffee ./install.coffee"
@@ -21,8 +19,8 @@
   "homepage": "https://github.com/shimaore/ethereal-banana",
   "main": "index.js",
   "dependencies": {
-    "pouchdb": "^3.3.1",
-    "teacup": "^1.2.0"
+    "pouchdb": "^5.3.2",
+    "teacup": "^2.0.0"
   },
   "keywords": [
     "CCNQ",
