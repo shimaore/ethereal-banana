@@ -132,7 +132,13 @@ format_host_link = (h,v,r) ->
 display_packets = (root,packets) ->
   for packet in packets
     packet.get_palette = get_palette
-    packet.time = (moment packet['frame.time']).tz(timezone).format()
+    # `Sep  1, 2015 16:14:16.906189000 UTC`
+    packet.time = packet['frame.time']
+    time = moment packet.time, 'MMM D, YYYY H:mm:s.S Z', 'en', true
+    if time.isValid()
+      packet.time = time.tz(timezone).format()
+    else
+      packet.time += ' (unparsed)'
     if packet["sip.Method"]
       el = $ sip_request packet
     else
