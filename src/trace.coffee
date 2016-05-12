@@ -132,10 +132,13 @@ format_host_link = (h,v,r) ->
 display_packets = (root,packets) ->
   for packet in packets
     packet.get_palette = get_palette
-    packet.time = packet['frame.time']
+    # nifty-ground 2.x
     time = packet['_ws.col.Time']
     if time?
       packet.time = moment.tz(time,'UTC').tz(timezone).format()
+    # nifty-ground 1.x
+    else
+      packet.time = packet['frame.time']
     if packet["sip.Method"]
       el = $ sip_request packet
     else
