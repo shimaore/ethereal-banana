@@ -98,7 +98,7 @@ sip_response = coffeecup.compile ->
   div class:"packet response split-#{@is_new} #{@get_palette call_id} #{if @current then 'current' else ''}", ->
     a href:"##{link}", @number
     span ' '
-    span class:"time",  -> @['frame.time']
+    span class:"time",  -> (moment @['frame.time']).tz(timezone).format()
     span ' '
     span class:"dst",   -> @['ip.dst']+':'+ (@['udp.dstport'] ? @['tcp.dstport'])
     span ' ← '
