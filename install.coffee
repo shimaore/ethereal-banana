@@ -20,6 +20,7 @@ files =
   assets/jquery-1.8.3.min.js
   assets/coffeecup.js
   assets/pouchdb-3.3.1.min.js
+  assets/moment.min.js
   assets/moment-timezone-with-data-2010-2020.min.js
   '''
 

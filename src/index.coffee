@@ -14,6 +14,7 @@ module.exports = ->
       script type:'text/javascript', src:'assets/jquery.spin.js'
       script type:'text/javascript', src:'assets/pouchdb-3.3.1.min.js'
       script type:'text/javascript', src:'assets/spin.min.js'
+      script type:'text/javascript', src:'assets/moment.min.js'
       script type:'text/javascript', src:'assets/moment-timezone-with-data-2010-2020.min.js'
       script type:'text/javascript', src:'/socket.io/socket.io.js'
       script type:'text/coffeescript', src:'entry-to-local.coffee'
