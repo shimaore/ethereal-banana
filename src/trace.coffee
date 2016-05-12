@@ -1,3 +1,6 @@
+# FIXME rewrite into riot.js and provide proper tz handling!
+timezone = 'Europe/Paris'
+
 qs =
   escape: encodeURIComponent
 
@@ -74,7 +77,7 @@ sip_request = coffeecup.compile ->
   div class:"packet request split-#{@is_new} #{@get_palette call_id} #{if @current then 'current' else ''}", ->
     a href:"##{link}", @number
     span ' '
-    span class:"time",  -> @['frame.time']
+    span class:"time",  -> (moment @['frame.time']).tz(timezone).format()
     span ' '
     span class:"src",   -> @['ip.src']+':'+ (@['udp.srcport'] ? @['tcp.srcport'])
     span ' → '
