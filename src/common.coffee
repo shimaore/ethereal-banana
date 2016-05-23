@@ -1,3 +1,9 @@
+# FIXME rewrite into riot.js and provide proper tz handling!
+timezone = 'Europe/Paris'
+
+time_of = (uepoch) ->
+  moment(uepoch.replace(/(...)$/,'.$1'),'x').tz(timezone).format()
+
 addon =
    _id: '_design/addon'
    language: 'coffeescript'
@@ -26,7 +32,7 @@ global_call = (row) ->
   g3 = $ """
   <div class="call #{v.ccnq_direction}">
     <a href="/_utils/document.html?cdrs/#{doc._id}">
-    #{v.start_stamp}
+    #{timeof v.answer_uepoch}
     </a>
     (#{v.ccnq_direction}, #{v.ccnq_profile})
     #{v.ccnq_from_e164} → #{v.ccnq_to_e164}
@@ -45,7 +51,7 @@ local_call = (row) ->
   g3 = $ """
   <div class="call #{v.ccnq_direction}">
     <a href="/_utils/document.html?cdrs-client/#{doc._id}">
-    #{v.start_stamp}
+    #{time_of v.answer_uepoch}
     </a>
     (#{v.ccnq_direction})
     <b>#{v.ccnq_from_e164}</b> → <b>#{v.ccnq_to_e164}</b>
