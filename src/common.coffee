@@ -32,7 +32,7 @@ global_call = (row) ->
   g3 = $ """
   <div class="call #{v.ccnq_direction}">
     <a href="/_utils/document.html?cdrs/#{doc._id}">
-    #{timeof v.answer_uepoch}
+    #{time_of v.answer_uepoch}
     </a>
     (#{v.ccnq_direction}, #{v.ccnq_profile})
     #{v.ccnq_from_e164} → #{v.ccnq_to_e164}
