@@ -90,6 +90,10 @@ $ ->
 
         # Endpoint
         if el_doc.endpoint?
+          if el_doc.endpoint_via?
+            via = " via #{el_doc.endpoint_via}"
+          else
+            via = ''
           $('.endpoint',nl).spin()
           db.get 'endpoint:'+el_doc.endpoint
           .then (doc) ->
@@ -98,7 +102,7 @@ $ ->
             <div class="endpoint">
               Endpoint:
               <ul>
-              <li>Name: <tt>#{doc.endpoint}</tt></li>
+              <li>Name: <tt>#{doc.endpoint}</tt>#{via}</li>
               <li>Password: <tt>#{doc.password}</tt></li>
               </ul>
             </div>
