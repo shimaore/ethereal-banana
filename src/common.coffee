@@ -151,7 +151,7 @@ run_local = (nl,gnum,limit) ->
   .catch (error) ->
     $('.calls-client',nl).empty().html "(no calls found for global number #{gnum}: #{error})"
 
-window.last_calls = (nl,gnum,limit = 20) ->
+window.last_calls = (nl,gnum,limit = 40) ->
   $('.calls',nl).spin()
 
   run_global nl, gnum, limit
