@@ -146,7 +146,7 @@ $ ->
               <li>Call-ID: <tt>#{reg.callid ? '(none)'}</tt></li>
               <li>User-Agent: <tt>#{reg.user_agent ? '(none)'}</tt></li>
               </ul>
-            """ else ' not registered') + """
+            """ else " #{reg._id} not registered") + """
             </div>
             """
             g4 = $ html
