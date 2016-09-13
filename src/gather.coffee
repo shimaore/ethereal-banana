@@ -157,7 +157,13 @@ $ ->
               $('.locations',nl).append g4
           socket.on 'location:response', display
           socket.on 'location:update', display
-          for domain in registration_domains
+          domains = []
+          if el_doc.endpoint_via?
+            domains.push el_doc.endpoint_via
+          for d in registration_domains
+            domains.push d
+          console.log "domains", domains
+          for domain in domains
             do (domain) ->
               socket.emit 'join', "endpoint:#{username}@#{domain}", ->
                 socket.emit 'location', "#{username}@#{domain}"
