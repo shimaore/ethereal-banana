@@ -160,7 +160,7 @@ $ ->
           domains = []
           if el_doc.endpoint_via?
             domains.push el_doc.endpoint_via
-          for d in registration_domains
+          for d in registration_domains when d not in domains
             domains.push d
           console.log "domains", domains
           for domain in domains
