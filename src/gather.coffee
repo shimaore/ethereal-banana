@@ -131,17 +131,18 @@ $ ->
             still = ''
             if reg.expires?
               still = new Date(reg.expires.replace ' ', 'T') - now
+              registered = false if still < 0
               still /= 1000
               still = " (#{still}s)"
 
             html = """
             <div class="location #{if registered then 'registered' else 'not-registered'}">
               Endpoint registration on #{reg.hostname ? reg.query_data?.hostname}:
-            """ + (if registered then """
+            """ + (if reg.expires? then """
               <ul>
               <li>Endpoint: <tt>#{reg_username}@#{reg_domain}</tt></li>
               <li>Contact: <tt>#{reg.contact ? '(not registered)'}</tt></li>
-              <li>Valid for: <tt>#{reg.expires ? '(none)'}</tt>#{still}</li>
+              <li>Valid until: <tt>#{reg.expires ? '(none)'}</tt>#{still}</li>
               <li>Received from: <tt>#{reg.received ? '(none)'}</tt></li>
               <li>Call-ID: <tt>#{reg.callid ? '(none)'}</tt></li>
               <li>User-Agent: <tt>#{reg.user_agent ? '(none)'}</tt></li>
