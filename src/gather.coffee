@@ -144,6 +144,7 @@ $ ->
               <li>Contact: <tt>#{reg.contact ? '(not registered)'}</tt></li>
               <li>Valid until: <tt>#{reg.expires ? '(none)'}</tt>#{still}</li>
               <li>Received from: <tt>#{reg.received ? '(none)'}</tt></li>
+              <li>Received: <tt>#{reg.query_time ? '(none)'}</tt></li>
               <li>Call-ID: <tt>#{reg.callid ? '(none)'}</tt></li>
               <li>User-Agent: <tt>#{reg.user_agent ? '(none)'}</tt></li>
               </ul>
