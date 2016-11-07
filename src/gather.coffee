@@ -154,7 +154,7 @@ $ ->
             """
             g4 = $ html
             g4.data 'doc', reg
-            if registered
+            if registered or reg.query_time?
               $('.locations',nl).prepend g4
             else
               $('.locations',nl).append g4
