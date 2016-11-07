@@ -148,7 +148,7 @@ $ ->
               <li>User-Agent: <tt>#{reg.user_agent ? '(none)'}</tt></li>
               </ul>
             """ else """
-              #{reg._id} not registered, last seen #{doc.query_time ? '(unknown)'}
+              #{reg._id} not registered, last seen #{reg.query_time ? '(unknown)'}
             """) + """
             </div>
             """
