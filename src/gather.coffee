@@ -158,7 +158,7 @@ $ ->
               $('.locations',nl).append g4
           socket.on 'location:response', display
           socket.on 'location:update', display
-          domains = []
+          domains = [domain]
           if el_doc.endpoint_via?
             domains.push el_doc.endpoint_via
           for d in registration_domains when d not in domains
