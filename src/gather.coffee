@@ -123,7 +123,7 @@ $ ->
           $('.locations',nl).spin()
           display = (reg) ->
             log {reg}
-            [reg_username,reg_domain] = reg._id.split '@'
+            [reg_username,reg_domain] = (reg.aor ? reg._id).split '@'
             return unless reg_username is username
             registered = reg.username?
 
