@@ -125,7 +125,9 @@ $ ->
             log {reg}
             [reg_username,reg_domain] = (reg.aor ? reg._id).split '@'
             return unless reg_username is username
-            registered = reg.username? and not reg._deleted
+            registered = reg.username?
+            registered = false if reg._deleted
+            registered = false if reg._missing
 
             now = new Date()
             still = ''
