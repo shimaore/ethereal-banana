@@ -269,7 +269,7 @@ show_query = ->
     # Cleanup parameters
     user = $('#user').val()
     if user
-      user = user.replace /[^\d]+/g, ''
+      user = user.replace /[^\d@a-z-]+/g, ''
     if not user or user is ''
       user = null
 
