@@ -61,7 +61,7 @@ local_call = (row) ->
     <b>#{v.ccnq_from_e164}</b> → <b>#{v.ccnq_to_e164}</b>
     <span class="failure">#{v.sip_invite_failure_status ? ''} #{v.sip_invite_failure_phrase ? ''}</span>
     (<span class="billable">billable: #{v.billsec}s</span>,
-     <span class="progress">progress: <b>#{v.progresssec}s</b></span>,
+     <span class="progress">progress: {v.progresssec}s</span>,
      <span class="answer">answer: #{v.answersec}s</span>,
      <span class="total">total: #{v.duration}s</span>)
      <span class="cause">#{v.hangup_cause}</span>
@@ -70,8 +70,8 @@ local_call = (row) ->
      <span class="hangup_disposition">#{v.sip_hangup_disposition}</span>
      <span class="hangup_phrase">#{v.sip_hangup_phrase ? ''}</span>
     <div class="call-quality">
-    Quality:
-      <span class="in_mos"><b>#{v.rtp_audio_in_mos}</b></span>
+    <span class="in_mos">Quality:
+      #{v.rtp_audio_in_mos}</span>
       (in:
       <span class="in_bytes">#{v.rtp_audio_in_media_bytes} bytes</span>
       <span class="in_packets">#{v.rtp_audio_in_media_packet_count} pkts</span>

@@ -47,6 +47,13 @@ tt {
   padding: 3px;
 }
 
+.progress {
+  font-weight: bold;
+}
+.in_mos {
+  font-weight: bold;
+}
+
 .call.ingress {
   background-color: #78DE69;
 }
