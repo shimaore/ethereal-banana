@@ -50,6 +50,8 @@ local_call = (row) ->
   # FIXME: Add link to generate a trace based on to/from
   v = doc.variables
   failure = v.sip_invite_failure_status? or v.sip_invite_failure_phrase?
+  mos = parseInt v.rtp_audio_in_mos
+  failure = true if not isNaN(mos) and mos < 4.00
   g3 = $ """
   <div class="call #{v.ccnq_direction} #{if failure then 'failure' else ''}">
     <a href="/_utils/document.html?cdrs-client/#{doc._id}">
