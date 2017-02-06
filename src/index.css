@@ -48,10 +48,16 @@ tt {
 }
 
 .call.ingress {
-  background-color: #ffd61a;
+  background-color: #19ff00;
 }
 .call.egress {
-  background-color: #ffa747;
+  background-color: #8CFF80;
+}
+.call.ingress.failure {
+  background-color: #ff6600;
+}
+.call.egress.failure {
+  background-color: #FFB380;
 }
 .failure {
   background-color: #dc2e39;

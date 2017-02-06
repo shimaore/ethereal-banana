@@ -29,15 +29,16 @@ global_call = (row) ->
   doc = row.doc
   # FIXME: Add link to generate a trace based on to/from
   v = doc.variables
+  failure = v.sip_invite_failure_status? or v.sip_invite_failure_phrase?
   g3 = $ """
-  <div class="call #{v.ccnq_direction}">
+  <div class="call #{v.ccnq_direction} #{if failure then 'failure' else ''}">
     <a href="/_utils/document.html?cdrs/#{doc._id}">
     #{time_of v.start_uepoch}
     </a>
     (#{v.ccnq_direction}, #{v.ccnq_profile})
     #{v.ccnq_from_e164} → #{v.ccnq_to_e164}
-    (billable: #{v.billsec}s,
-     total: #{v.duration}s,
+    (<span class="billable">billable: #{v.billsec}s</span>,
+     <span class="duration">total: #{v.duration}s</span>,
      #{v.hangup_cause})
   </div>
   """
@@ -48,45 +49,46 @@ local_call = (row) ->
   doc = row.doc
   # FIXME: Add link to generate a trace based on to/from
   v = doc.variables
+  failure = v.sip_invite_failure_status? or v.sip_invite_failure_phrase?
   g3 = $ """
-  <div class="call #{v.ccnq_direction}">
+  <div class="call #{v.ccnq_direction} #{if failure then 'failure' else ''}">
     <a href="/_utils/document.html?cdrs-client/#{doc._id}">
     #{time_of v.start_uepoch}
     </a>
     (#{v.ccnq_direction})
     <b>#{v.ccnq_from_e164}</b> → <b>#{v.ccnq_to_e164}</b>
     <span class="failure">#{v.sip_invite_failure_status ? ''} #{v.sip_invite_failure_phrase ? ''}</span>
-    (billable: #{v.billsec}s,
-     progress: <b>#{v.progresssec}s</b>,
-     answer: #{v.answersec}s,
-     total: #{v.duration}s)
-     #{v.hangup_cause}
-     #{v.originate_disposition}
-     #{v.endpoint_disposition}
-     #{v.sip_hangup_disposition}
-     #{v.sip_hangup_phrase ? ''}
+    (<span class="billable">billable: #{v.billsec}s</span>,
+     <span class="progress">progress: <b>#{v.progresssec}s</b></span>,
+     <span class="answer">answer: #{v.answersec}s</span>,
+     <span class="total">total: #{v.duration}s</span>)
+     <span class="cause">#{v.hangup_cause}</span>
+     <span class="originate_disposition">#{v.originate_disposition}</span>
+     <span class="endpoint_disposition">#{v.endpoint_disposition}</span>
+     <span class="hangup_disposition">#{v.sip_hangup_disposition}</span>
+     <span class="hangup_phrase">#{v.sip_hangup_phrase ? ''}</span>
     <div class="call-quality">
     Quality:
-      <b>#{v.rtp_audio_in_mos}</b>
+      <span class="in_mos"><b>#{v.rtp_audio_in_mos}</b></span>
       (in:
-      #{v.rtp_audio_in_media_bytes} bytes
-      #{v.rtp_audio_in_media_packet_count} pkts
-      #{v.rtp_audio_in_flaw_total} flaws
-      #{v.rtp_audio_in_skip_packet_count} skip
-      #{v.rtp_audio_in_dtmf_packet_count} dtmf
-      #{v.rtp_audio_in_cng_packet_count} cng
+      <span class="in_bytes">#{v.rtp_audio_in_media_bytes} bytes</span>
+      <span class="in_packets">#{v.rtp_audio_in_media_packet_count} pkts</span>
+      <span class="in_flaws">#{v.rtp_audio_in_flaw_total} flaws</span>
+      <span class="in_skip">#{v.rtp_audio_in_skip_packet_count} skip</span>
+      <span class="in_dtmf">#{v.rtp_audio_in_dtmf_packet_count} dtmf</span>
+      <span class="in_cng">#{v.rtp_audio_in_cng_packet_count} cng</span>
     , jitter:
-      #{v.rtp_audio_in_jitter_packet_count} pkts
-      #{v.rtp_audio_in_jitter_min_variance} min
-      #{v.rtp_audio_in_jitter_max_variance} max
-      #{v.rtp_audio_in_jitter_loss_rate} loss
-      #{v.rtp_audio_in_jitter_burst_rate} burst
+      <span class="in_jitter">#{v.rtp_audio_in_jitter_packet_count} pkts</span>
+      <span class="in_jitter_min">#{v.rtp_audio_in_jitter_min_variance} min</span>
+      <span class="in_jitter_max">#{v.rtp_audio_in_jitter_max_variance} max</span>
+      <span class="in_jitter_loss">#{v.rtp_audio_in_jitter_loss_rate} loss</span>
+      <span class="in_jitter_burst">#{v.rtp_audio_in_jitter_burst_rate} burst</span>
     , out:
-      #{v.rtp_audio_out_media_bytes} bytes
-      #{v.rtp_audio_out_media_packet_count} pkts
-      #{v.rtp_audio_out_skip_packet_count} skip
-      #{v.rtp_audio_out_dtmf_packet_count} dtmf
-      #{v.rtp_audio_out_cng_packet_count} cng
+      <span class="out_bytes">#{v.rtp_audio_out_media_bytes} bytes</span>
+      <span class="out_packets">#{v.rtp_audio_out_media_packet_count} pkts</span>
+      <span class="out_skip">#{v.rtp_audio_out_skip_packet_count} skip</span>
+      <span class="out_dtmf">#{v.rtp_audio_out_dtmf_packet_count} dtmf</span>
+      <span class="out_cng">#{v.rtp_audio_out_cng_packet_count} cng</span>
       )
     </div>
   </div>
