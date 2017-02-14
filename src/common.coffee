@@ -61,7 +61,7 @@ local_call = (row) ->
     <b>#{v.ccnq_from_e164}</b> → <b>#{v.ccnq_to_e164}</b>
     <span class="failure">#{v.sip_invite_failure_status ? ''} #{v.sip_invite_failure_phrase ? ''}</span>
     (<span class="billable">billable: #{v.billsec}s</span>,
-     <span class="progress">progress: {v.progresssec}s</span>,
+     <span class="progress">progress: #{v.progresssec}s</span>,
      <span class="answer">answer: #{v.answersec}s</span>,
      <span class="total">total: #{v.duration}s</span>)
      <span class="cause">#{v.hangup_cause}</span>
