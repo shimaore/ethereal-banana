@@ -259,6 +259,12 @@ show_query = ->
 
     last_calls $('#trace'), user
 
+  # Handle parameter in hash
+  if window.location.hash? and m = window.location.hash.match /^#number=(\d+)/
+    user = m[1]
+    $('#user').val user
+    $('#user').keyup()
+
   # Handle form submission
   t = null
   $('body').on 'submit', '#trace', (e) ->
