@@ -36,7 +36,9 @@ display_host = (doc) ->
     el_packets = $ "<div><button>Show all #{len} packets</button></div>"
 
     current = 0
-    if m = window.location.hash?.match /// ^# (?:[^/]+) / (?:[^/]+) / (\d+) ///
+
+    # Note how we match on starting `r` (since we are the ones defining the reference, see below).
+    if m = window.location.hash?.match /// ^# (?:r[^/]+) / (?:[^/]+) / (\d+) ///
       current = parseInt m[1]
     for packet,i in doc.packets
       packet.number = i+1
@@ -264,6 +266,7 @@ show_query = ->
 
     $('#traces').spin()
 
+    # _Our_ references start with the letter `r`.
     reference = 'r'+Math.random()
 
     # Cleanup parameters
