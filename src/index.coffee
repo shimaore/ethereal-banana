@@ -8,7 +8,6 @@ module.exports = ->
       meta charset: 'utf-8'
       title 'Telephony Support'
       link rel:'stylesheet', href:'index.css', type:'text/css'
-      script type:'text/javascript', src:'assets/coffee-script.js'
       script type:'text/javascript', src:'assets/coffeecup.js'
       script type:'text/javascript', src:'assets/jquery.min.js'
       script type:'text/javascript', src:'assets/jquery.spin.js'
@@ -17,12 +16,12 @@ module.exports = ->
       script type:'text/javascript', src:'assets/moment.min.js'
       script type:'text/javascript', src:'assets/moment-timezone.min.js'
       script type:'text/javascript', src:'/socket.io/socket.io.js'
-      script type:'text/coffeescript', src:'entry-to-local.coffee'
-      script type:'text/coffeescript', src:'local-to-global.coffee'
-      script type:'text/coffeescript', src:'config.coffee'
-      script type:'text/coffeescript', src:'common.coffee'
-      script type:'text/coffeescript', src:'gather.coffee'
-      script type:'text/coffeescript', src:'trace.coffee'
+      script type:'text/javascript', src:'entry-to-local.js'
+      script type:'text/javascript', src:'local-to-global.js'
+      script type:'text/javascript', src:'config.js'
+      script type:'text/javascript', src:'common.js'
+      script type:'text/javascript', src:'gather.js'
+      script type:'text/javascript', src:'trace.js'
     body ->
       div id:"main", ->
         div id:"entry"

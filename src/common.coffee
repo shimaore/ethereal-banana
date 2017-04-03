@@ -1,6 +1,4 @@
 # FIXME rewrite into riot.js and provide proper tz handling!
-console.log 'Loading common.coffee'
-
 timezone = 'Europe/Paris'
 
 time_of = (uepoch) ->
@@ -204,4 +202,4 @@ socket.on 'ready', ({roles}) ->
 socket.on 'joined', (room) ->
   log joined:room
 
-console.log 'Loaded common.coffee'
+log 'Loaded common.coffee'

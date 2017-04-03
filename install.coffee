@@ -6,15 +6,14 @@ _id = 'support'
 
 files =
   '''
-  src/trace.coffee
-  src/common.coffee
-  src/gather.coffee
+  lib/trace.js
+  lib/common.js
+  lib/gather.js
   src/index.css
-  local/index.html
-  local/entry-to-local.coffee
-  local/local-to-global.coffee
-  local/config.coffee
-  assets/coffee-script.js
+  lib/index.html
+  lib/entry-to-local.js
+  lib/local-to-global.js
+  lib/config.js
   assets/spin.min.js
   assets/jquery.spin.js
   assets/jquery.min.js
@@ -29,10 +28,10 @@ files = files.split /\s+/
 fs = require 'fs'
 teacup = require 'teacup'
 html = teacup.render require './src/index.coffee'
-fs.writeFileSync 'local/index.html', html
+fs.writeFileSync 'lib/index.html', html
 
 it = db.put {_id}
-  .catch (error) -> console.log "#{error} (ignored)"
+  .catch (error) -> console.log "#{error.message} (ignored)"
 
 for f in files
   do (f) ->
@@ -48,6 +47,8 @@ for f in files
           'text/css'
         else if f.match /\.html$/
           'text/html'
+        else if f.match /\.json$/
+          'application/json'
 
         name = f.replace /^(src|local)\//, ''
         console.log "AT rev #{_rev}, going to push #{f} #{type} to #{name}"
