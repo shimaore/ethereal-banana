@@ -1,4 +1,6 @@
 # FIXME rewrite into riot.js and provide proper tz handling!
+console.log 'Loading trace.coffee'
+
 timezone = 'Europe/Paris'
 
 qs =
@@ -340,4 +342,4 @@ $ ->
   else
     do show_query
 
-return
+console.log 'Loaded trace.coffee'

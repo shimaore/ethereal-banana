@@ -1,3 +1,5 @@
+console.log 'Loading gather.coffee'
+
 qs =
   escape: encodeURIComponent
 
@@ -177,5 +179,6 @@ $ ->
         null
     .catch (error) ->
       log "Failed to get numbers starting with #{value}: #{error}"
+    return
 
-return
+console.log 'Loaded gather.coffee'
