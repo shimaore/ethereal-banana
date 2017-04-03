@@ -16,7 +16,7 @@ if (typeof window !== "undefined" && window !== null) {
   fs = require('fs');
 }
 
-coffeecup.version = '0.3.19';
+coffeecup.version = '0.3.21';
 
 coffeecup.doctypes = {
   'default': '<!DOCTYPE html>',
@@ -37,7 +37,7 @@ elements = {
   regular: 'a abbr address article aside audio b bdi bdo blockquote body button\
  canvas caption cite code colgroup datalist dd del details dfn div dl dt em\
  fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 head header hgroup\
- html i iframe ins kbd label legend li map mark menu meter nav noscript object\
+ html i iframe ins kbd label legend li main map mark menu meter nav noscript object\
  ol optgroup option output p pre progress q rp rt ruby s samp script section\
  select small span strong style sub summary sup table tbody td textarea tfoot\
  th thead time title tr u ul video',
@@ -54,6 +54,7 @@ elements = {
  title tref tspan use view vkern',
   "void": 'area base br col command embed hr img input keygen link meta param\
  source track wbr',
+  xml: 'urlset url loc lastmod changefreq priority',
   obsolete: 'applet acronym bgsound dir frameset noframes isindex listing\
  nextid noembed plaintext rb strike xmp big blink center font marquee multicol\
  nobr spacer tt',
@@ -77,7 +78,7 @@ merge_elements = function() {
   return result;
 };
 
-coffeecup.tags = merge_elements('regular', 'obsolete', 'void', 'obsolete_void', 'svg');
+coffeecup.tags = merge_elements('regular', 'obsolete', 'void', 'obsolete_void', 'svg', 'xml');
 
 coffeecup.self_closing = merge_elements('void', 'obsolete_void');
 
