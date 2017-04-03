@@ -17,11 +17,11 @@ files =
   assets/coffee-script.js
   assets/spin.min.js
   assets/jquery.spin.js
-  assets/jquery-1.8.3.min.js
+  assets/jquery.min.js
   assets/coffeecup.js
-  assets/pouchdb-3.3.1.min.js
+  assets/pouchdb.min.js
   assets/moment.min.js
-  assets/moment-timezone-with-data-2010-2020.min.js
+  assets/moment-timezone.min.js
   '''
 
 files = files.split /\s+/
