@@ -51,7 +51,7 @@ local_call = (row) ->
   v = doc.variables
   failure = v.sip_invite_failure_status? or v.sip_invite_failure_phrase?
   mos = parseInt v.rtp_audio_in_mos
-  failure = true if not isNaN(mos) and mos < 4.00
+  quality_failure = true if not isNaN(mos) and mos < 4.00
   g3 = $ """
   <div class="call #{v.ccnq_direction} #{if failure then 'failure' else ''}">
     <a href="/_utils/document.html?cdrs-client/#{doc._id}">
@@ -69,7 +69,7 @@ local_call = (row) ->
      <span class="endpoint_disposition">#{v.endpoint_disposition}</span>
      <span class="hangup_disposition">#{v.sip_hangup_disposition}</span>
      <span class="hangup_phrase">#{v.sip_hangup_phrase ? ''}</span>
-    <div class="call-quality">
+    <div class="call-quality #{if quality_failure then 'quality-failure' else ''}">
     <span class="in_mos">Quality:
       #{v.rtp_audio_in_mos}</span>
       (in:
