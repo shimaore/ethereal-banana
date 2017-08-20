@@ -3,7 +3,7 @@
   "version": "3.7.2-1",
   "private": true,
   "devDependencies": {
-    "coffee-script": "^1.12.4"
+    "coffee-script": "^1.12.7"
   },
   "scripts": {
     "push": "coffee -c -M -o lib src/*.coffee local/*.coffee && ./node_modules/.bin/coffee ./install.coffee"
@@ -19,7 +19,7 @@
   "homepage": "https://github.com/shimaore/ethereal-banana",
   "main": "index.js",
   "dependencies": {
-    "pouchdb": "^6.1.2",
+    "pouchdb": "^6.3.4",
     "teacup": "^2.0.0"
   },
   "keywords": [
