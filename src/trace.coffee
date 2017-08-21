@@ -15,7 +15,7 @@ display_host = (doc) ->
   el_host = $ """
     <div>
       <h2 class="host"><a name="#{doc.reference}/#{doc.host}">#{doc.host}</a></h2>
-      <p class="query">#{user} / #{doc.call_id ? '(any)'} / #{doc.days_ago ? '(any)'} days ago.</p>
+      <p class="query">#{user} / #{if doc.use_xref then doc.reference else '(any)'} / #{doc.call_id ? '(any)'} / #{doc.ip ? '(any)'} / #{doc.port ? '(any)' }/ #{doc.days_ago ? '(any)'} days ago.</p>
     </div>
   """
   el_host.data 'doc', doc
@@ -222,11 +222,17 @@ show_query = ->
       <label>Number:
         <input type="tel" name="user" id="user" size="16" class="focus" />
       </label>
+      <label>xref:
+        <input type="text" name="xref" id="xref" size="10"/>
+      </label>
       <label>Call-ID:
         <input type="text" name="call_id" id="call_id" />
       </label>
       <label>IP:
         <input type="text" name="ip" id="ip" />
+      </label>
+      <label>Port:
+        <input type="number" name="port" id="port" value="" size="5" />
       </label>
       <label>
         <input type="number" name="days_ago" id="days_ago" value="" size="2" />
@@ -247,7 +253,6 @@ show_query = ->
   run = ->
 
     t = null
-    limit = $('#limit').val()
 
     # Cleanup parameters
     user = $('#user').val()
@@ -274,15 +279,18 @@ show_query = ->
 
     $('#traces').spin()
 
-    # _Our_ references start with the letter `r`.
-    reference = 'r'+Math.random()
-
     # Cleanup parameters
     user = $('#user').val()
     if user
       user = user.replace /[^\d@a-z-]+/g, ''
     if not user or user is ''
       user = null
+
+    xref = $('#xref').val()
+    if xref? and xref isnt ''
+      xref = xref.replace /^\s+|\s+$/g, ''
+    if not xref? or xref is ''
+      xref = null
 
     call_id = $('#call_id').val()
     if call_id? and call_id isnt ''
@@ -296,13 +304,19 @@ show_query = ->
     if not ip? or ip is ''
       ip = null
 
+    port = $('#port').val()
+    if port? and port isnt ''
+      port = parseInt port
+    if not port or port is ''
+      port = null
+
     days_ago = $('#days_ago').val()
     if days_ago? and days_ago isnt ''
       days_ago = parseInt days_ago
     if not days_ago or days_ago is ''
       days_ago = null
 
-    unless user? or call_id? or ip?
+    unless user? or xref? or call_id? or ip? or port?
       alert 'You must enter a criteria.'
       return
 
@@ -311,35 +325,48 @@ show_query = ->
       <div id="traces">&nbsp;</div>
     '''
 
+    # _Our_ references start with the letter `r`.
+    if xref?
+      reference = xref
+    else
+      reference = 'r'+Math.random()
+
     # Send request
     request = {reference}
     request.from_user = user      if user?
     request.to_user   = user      if user?
+    request.use_xref  = xref?
     request.call_id   = call_id   if call_id?
     request.ip        = ip        if ip?
+    request.port      = port      if port?
     request.days_ago  = days_ago  if days_ago?
     send_request request, ->
       $('#entry').empty()
-      window.location.hash = "##{reference}"
+      window.location.hash = "#R=#{reference}"
 
     # No default
     return false
 
-  # Links for callids
-  $('body').on 'click', '.callid', (e) ->
+  # Links for xrefs
+  $('body').on 'click', '.xref', (e) ->
     doc = $(@).parent().data 'doc'
-    reference = 'r'+Math.random()
     request = {reference}
-    request.call_id   = call_id   if doc.call_id?
+    request.call_id = call_id   if doc.call_id?
     send_request request
 
   return
 
 $ ->
-  if window.location.hash? and m = window.location.hash.match /^#(r[\d.]+)/
-    reference = m[1]
-    get_response reference
-  else
-    do show_query
+  switch
+    # Legacy format
+    when window.location.hash? and m = window.location.hash.match /^#(r[\d.]+)/
+      reference = m[1]
+      get_response reference
+    # New format
+    when window.location.hash? and m = window.location.hash.match /^#R=(.+)/
+      reference = m[1]
+      get_response reference
+    else
+      do show_query
 
 console.log 'Loaded trace.coffee'
