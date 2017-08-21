@@ -8,6 +8,66 @@ qs =
 
 log = -> console.log arguments...
 
+# Display all hosts at once
+
+packets = []
+
+TIME = '_ws.col.Time'
+
+add_packets = (doc) ->
+  new_packets = doc.packets
+  packets = packets
+    .concat new_packets
+    .sort (a,b) -> a[TIME] - b[TIME]
+    .splice -100
+
+  ###
+  endpoints = {}
+  index = 0
+
+  register_endpoint = (name) ->
+    if name of endpoints
+      return endpoints[name]
+    endpoints[name] = index++
+  ###
+
+  for packet in packets
+    src_endpoint = "#{packet['ip.src']} (#{packet['udp.srcport']})"
+    dst_endpoint = "#{packet['ip.dst']} (#{packet['udp.dstport']})"
+    # src_endpoint = packet['ip.src']
+    # dst_endpoint = packet['ip.dst']
+    packet.src_endpoint = src_endpoint.replace ',', ' '
+    packet.dst_endpoint = dst_endpoint.replace ',', ' '
+    ###
+    src_i = register_endpoint src_endpoint
+    dst_i = register_endpoint dst_endpoint
+    ###
+
+  ###
+  columns = []
+  for own k,v of endpoints
+    columnts[v] = k
+  ###
+
+show_diagram = ->
+  txt = ""
+  started = false
+  for packet in packets
+    # Start on a Request
+    started = true if packet['sip.Method']?
+    continue unless started
+    # description = packet['sip.Method'] ? packet['sip.Status-Code']
+    description = packet['sip.Request-Line'] ? packet['sip.Status-Line']
+    # txt += "Note over #{packet.src_endpoint}: #{packet['udp.srcport']} \r\n"
+    # txt += "Note over #{packet.dst_endpoint}: #{packet['udp.dstport']} \r\n"
+    txt += "Note over #{packet.src_endpoint}: #{packet[TIME]}\r\n"
+    txt += "#{packet.src_endpoint} -> #{packet.dst_endpoint} : #{description} \r\n"
+
+  d = Diagram.parse txt
+  d.drawSVG 'diagram', theme: 'simple'
+
+# Legacy display
+
 display_host = (doc) ->
   user = doc.from_user ? '(any)'
   if doc.from_user isnt doc.to_user
@@ -163,6 +223,7 @@ get_response = (reference) ->
   $('#results').html '''
     <div id="hosts">(no hosts yet)</div>
     <div id="traces">(no traces yet)</div>
+    <div id="diagram">(diagram)</div>
   '''
 
   db = new PouchDB "#{window.location.protocol}//#{window.location.host}/logging"
@@ -177,11 +238,14 @@ get_response = (reference) ->
 
         list_host doc, true
         $('#traces').append display_host doc
+        add_packets doc
 
   .catch (error) ->
     log 'Failed to retrieve trace documents'
     $('#traces').html 'There was an error retrieving traces.'
     log error
+  .then ->
+    show_diagram()
 
 # Process response (callback)
 socket = window.the_socket
@@ -323,6 +387,7 @@ show_query = ->
     $('#results').html '''
       <div id="hosts">(no hosts yet)</div>
       <div id="traces">&nbsp;</div>
+      <div id="diagram">(diagram)</div>
     '''
 
     # _Our_ references start with the letter `r`.

@@ -8,6 +8,13 @@ _id = 'support'
 
 files =
   '''
+  bower_components/bower-webfontloader/webfont.js
+  bower_components/snap.svg/dist/snap.svg-min.js
+  bower_components/underscore/underscore-min.js
+  bower_components/js-sequence-diagrams/dist/sequence-diagram-min.js
+  bower_components/js-sequence-diagrams/dist/sequence-diagram-min.css
+  bower_components/js-sequence-diagrams/fonts/daniel/danielbd.woff
+  bower_components/js-sequence-diagrams/fonts/daniel/danielbd.woff2
   lib/trace.js
   lib/common.js
   lib/gather.js
@@ -51,6 +58,8 @@ for f in files
           'text/html'
         else if f.match /\.json$/
           'application/json'
+        else if f.match /\.woff2?$/
+          'application/font-woff'
 
         name = f.replace /^(src|local|lib)\//, ''
         console.log "AT rev #{_rev}, going to push #{f} #{type} to #{name}"

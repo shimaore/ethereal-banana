@@ -8,6 +8,7 @@ module.exports = ->
       meta charset: 'utf-8'
       title 'Telephony Support'
       link rel:'stylesheet', href:'index.css', type:'text/css'
+      link rel:'stylesheet', href:'bower_components/js-sequence-diagrams/dist/sequence-diagram-min.css'
       script type:'text/javascript', src:'assets/coffeecup.js'
       script type:'text/javascript', src:'assets/jquery.min.js'
       script type:'text/javascript', src:'assets/jquery.spin.js'
@@ -22,6 +23,12 @@ module.exports = ->
       script type:'text/javascript', src:'common.js'
       script type:'text/javascript', src:'gather.js'
       script type:'text/javascript', src:'trace.js'
+      script type:'text/javascript', src:'bower_components/bower-webfontloader/webfont.js'
+      script type:'text/javascript', src:'bower_components/snap.svg/dist/snap.svg-min.js'
+      script type:'text/javascript', src:'bower_components/underscore/underscore-min.js'
+      script type:'text/javascript', src:'bower_components/js-sequence-diagrams/dist/sequence-diagram-min.js'
+
+
     body ->
       div id:"main", ->
         div id:"entry"
