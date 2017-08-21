@@ -1,6 +1,8 @@
 {db} = require './local/config.json'
+PouchDB = require ('pouchdb-core')
+  .plugin require ('pouchdb-adapter-http')
 
-db = (require 'pouchdb') db
+db = new PouchDB db
 
 _id = 'support'
 
@@ -50,7 +52,7 @@ for f in files
         else if f.match /\.json$/
           'application/json'
 
-        name = f.replace /^(src|local)\//, ''
+        name = f.replace /^(src|local|lib)\//, ''
         console.log "AT rev #{_rev}, going to push #{f} #{type} to #{name}"
         db.putAttachment _id, name, _rev, fs.readFileSync(f), type
       .then ->

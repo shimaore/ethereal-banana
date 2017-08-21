@@ -19,7 +19,8 @@
   "homepage": "https://github.com/shimaore/ethereal-banana",
   "main": "index.js",
   "dependencies": {
-    "pouchdb": "^6.3.4",
+    "pouchdb-core": "^6.3.4",
+    "pouchdb-adapter-http": "^6.3.4",
     "teacup": "^2.0.0"
   },
   "keywords": [
