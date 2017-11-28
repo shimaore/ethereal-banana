@@ -86,6 +86,28 @@ tt {
   padding: 1px;
 }
 
+.call-info.ingress {
+  display: none;
+}
+
+.call-info.egress .sdp {
+  font-family: "Inconsolata", fixed;
+  font-size: 8pt;
+}
+.call-info.egress .sdp:hover {
+  background-color: yellow;
+  color: black;
+}
+
+.call-info.egress .sip {
+  font-family: "Inconsolata", fixed;
+  font-size: 8pt;
+}
+.call-info.egress .sip:hover {
+  background-color: gold;
+  color: black;
+}
+
 /* trace.coffee */
 .packet span {
   margin: 1px;

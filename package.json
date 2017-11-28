@@ -1,6 +1,6 @@
 {
   "name": "ethereal-banana",
-  "version": "3.8.2",
+  "version": "3.9.0",
   "private": true,
   "devDependencies": {
     "bower": "^1.8.0",

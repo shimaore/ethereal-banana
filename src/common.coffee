@@ -93,17 +93,32 @@ local_call = (row) ->
       <span class="out_cng">#{v.rtp_audio_out_cng_packet_count} cng</span>
       )
     </div>
+    <div class="call-info #{v.ccnq_direction}">
+      <span class="sip">#{ v['sip_h_X-Ex'] }</span>
+      <span class="sdp">#{ v.switch_r_sdp }</span>
+    </div>
   </div>
   """
   g3.data 'doc', doc
   g3
 
-run_global = (nl,gnum,limit) ->
-  db = new PouchDB "#{window.location.protocol}//#{window.location.host}/cdrs"
-  db
-  .put addon
-  .catch -> true
-  .then ->
+
+make_runner = (dbname,description,css,method) -> (nl,gnum,limit) ->
+  console.log 'runner', dbname, description, css, method, nl, gnum, limit
+
+  db = new PouchDB "#{window.location.protocol}//#{window.location.host}/#{dbname}"
+
+  header = $ "<div>Last #{limit} calls (#{description}):</div>"
+  input = $ '<input name="date" placeholder="Filter" alt="Filter" type="date" />'
+  header.append input
+  cdrs = $ '<div class="cdrs"></div>'
+
+  $(css,nl)
+    .empty()
+    .append header
+    .append cdrs
+
+  run = ->
     db.query 'addon/cdr_by_number',
       endkey: [gnum]
       startkey: [gnum,'z']
@@ -111,49 +126,51 @@ run_global = (nl,gnum,limit) ->
       include_docs: true
       descending: true
       stale: 'update_after'
-  .then ({rows}) ->
-    $('.calls',nl)
-      .empty()
-      .append "<div>Last #{limit} calls (global/carrier side):</div>"
-    unless rows?
-      $('.calls',nl).append '(none found)'
-      return
+    .then show, burp
 
+  show = ({rows}) ->
+    console.log 'show', rows
+    unless rows?
+      cdrs.append '(none found)'
+      return
+    unless rows.length
+      cdrs.append '(none matching)'
+      return
     for row in rows
       do (row) ->
-        $('.calls',nl).append global_call row
+        cdrs.append method row
     return
-  .catch (error) ->
-    $('.calls',nl).empty().html "(no calls found for global number #{gnum}: #{error})"
 
-run_local = (nl,gnum,limit) ->
-  dbl = new PouchDB "#{window.location.protocol}//#{window.location.host}/cdrs-client"
+  burp = (error) ->
+    console.log 'burp', error
+    $(css,nl).empty().html "(no calls found for global number #{gnum}: #{error})"
 
-  dbl
+  filter = ->
+    value = input.val()
+    cdrs.empty()
+
+    unless value? and value isnt ''
+      run()
+      return
+
+    db.query 'addon/cdr_by_number',
+      startkey: [gnum,value]
+      endkey: [gnum,"#{value}z"]
+      include_docs: true
+      stale: 'update_after'
+    .then show, burp
+    return
+
+  db
   .put addon
   .catch -> true
   .then ->
-    dbl.query 'addon/cdr_by_number',
-      endkey: [gnum]
-      startkey: [gnum,'z']
-      limit: limit
-      include_docs: true
-      descending: true
-      stale: 'update_after'
-  .then ({rows}) ->
-    $('.calls-client',nl)
-      .empty()
-      .append "<div>Last #{limit} calls (local/client side):</div>"
-    unless rows?
-      $('.calls-client',nl).append '(none found)'
-      return
+    run()
+    input.bind 'change', filter
+    console.log 'ready', input
 
-    for row in rows
-      do (row) ->
-        $('.calls-client',nl).append local_call row
-    return
-  .catch (error) ->
-    $('.calls-client',nl).empty().html "(no calls found for global number #{gnum}: #{error})"
+run_global = make_runner 'cdrs',         'global/carrier side', '.calls',        global_call
+run_local  = make_runner 'cdrs-client', 'client side',          '.calls-client', local_call
 
 window.last_calls = (nl,gnum,limit = 40) ->
   $('.calls',nl).spin()
