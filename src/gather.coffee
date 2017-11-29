@@ -22,7 +22,9 @@ $ ->
     limit = $('#limit').val() or 3
 
     # Value will be the national part of the number
-    value = $('#user').val().replace /[^\d]+/g, ''
+    value = $('#user').val()
+    return unless value?
+    value = value.replace /[^\d]+/g, ''
     value = entry_to_local value
     return unless value?
 
