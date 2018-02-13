@@ -69,8 +69,12 @@ tt {
 .call.failure {
   background-color: #dc2e39;
   color: white;
-  font-weight: bold;
   padding: 1px;
+}
+
+.reason {
+  color: yellow;
+  font-weight: bold;
 }
 
 .call-quality {

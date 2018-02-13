@@ -7,6 +7,7 @@ time_of = (uepoch) ->
 addon =
    _id: '_design/addon'
    language: 'coffeescript'
+   description: 'Used by ethereal-banana'
    views:
      cdr_by_number:
        map: '''
@@ -37,6 +38,7 @@ global_call = (row) ->
     </a>
     (#{v.ccnq_direction}, #{v.ccnq_profile})
     #{v.ccnq_from_e164} → #{v.ccnq_to_e164}
+    <span class="reason">#{v.sip_invite_failure_status ? ''} #{v.sip_invite_failure_phrase ? ''}</span>
     (<span class="billable">billable: #{v.billsec}s</span>,
      <span class="duration">total: #{v.duration}s</span>,
      #{v.hangup_cause})
@@ -59,7 +61,7 @@ local_call = (row) ->
     </a>
     (#{v.ccnq_direction})
     <b>#{v.ccnq_from_e164}</b> → <b>#{v.ccnq_to_e164}</b>
-    <span class="failure">#{v.sip_invite_failure_status ? ''} #{v.sip_invite_failure_phrase ? ''}</span>
+    <span class="reason">#{v.sip_invite_failure_status ? ''} #{v.sip_invite_failure_phrase ? ''}</span>
     (<span class="billable">billable: #{v.billsec}s</span>,
      <span class="progress">progress: #{v.progresssec}s</span>,
      <span class="answer">answer: #{v.answersec}s</span>,
@@ -163,7 +165,9 @@ make_runner = (dbname,description,css,method) -> (nl,gnum,limit) ->
 
   db
   .put addon
-  .catch -> true
+  .catch (error) ->
+    console.error error
+    true
   .then ->
     run()
     input.bind 'change', filter
