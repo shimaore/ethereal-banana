@@ -1,13 +1,13 @@
 {
   "name": "ethereal-banana",
-  "version": "3.9.2",
+  "version": "3.10.0",
   "private": true,
   "devDependencies": {
     "bower": "^1.8.0",
     "coffee-script": "^1.12.7"
   },
   "scripts": {
-    "push": "coffee -c -M -o lib src/*.coffee local/*.coffee && ./node_modules/.bin/coffee ./install.coffee"
+    "push": "coffee -c -o lib local/*.coffee; coffee -c -o lib src/*.coffee && ./node_modules/.bin/coffee ./install.coffee"
   },
   "repository": {
     "type": "git",

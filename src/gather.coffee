@@ -1,4 +1,5 @@
 console.log 'Loading gather.coffee'
+log = -> console.log arguments...
 
 qs =
   escape: encodeURIComponent
@@ -6,7 +7,6 @@ qs =
 socket = window.the_socket
 
 $ ->
-  log = -> console.log arguments...
 
   t = null
   $('body').on 'keyup', '#user', ->
@@ -25,6 +25,7 @@ $ ->
     value = $('#user').val()
     return unless value?
     value = value.replace /[^\d]+/g, ''
+    original_value = value
     value = entry_to_local value
     return unless value?
 
@@ -38,9 +39,26 @@ $ ->
       limit:limit
       include_docs: true
     .then ({rows}) ->
-      log {rows}
-      return unless rows?
+      log 'Local numbers', {rows}
       $('#results').empty()
+
+      unless rows?.length > 0
+        console.log 'Using default'
+        el = $ """
+        <div class="number">
+          <ul>
+            <li>Unknown Number: <tt>#{original_value}</tt></li>
+          </ul>
+          <div class="calls-client"></div>
+          <div class="calls"></div>
+        </div>
+        """
+        doc = gnum:original_value
+        el.data 'doc', doc
+        $('#results').append el
+        last_calls el, original_value
+        return
+
       for row in rows
         do (row) ->
           doc = row.doc
@@ -126,7 +144,7 @@ $ ->
           $('.locations',nl).empty()
           $('.locations',nl).spin()
           display = (reg) ->
-            log {reg}
+            log 'display', {reg}
             [reg_username,reg_domain] = (reg.aor ? reg._id).split '@'
             return unless reg_username is username
             registered = reg.username?

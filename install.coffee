@@ -63,6 +63,10 @@ for f in files
 
         name = f.replace /^(src|local|lib)\//, ''
         console.log "AT rev #{_rev}, going to push #{f} #{type} to #{name}"
-        db.putAttachment _id, name, _rev, fs.readFileSync(f), type
+        content = try fs.readFileSync(f)
+        if content?
+          db.putAttachment _id, name, _rev, content, type
+        else
+          console.log "Unable to read #{f}, skipping."
       .then ->
           console.log "Pushed #{f}"

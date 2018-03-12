@@ -106,7 +106,7 @@ local_call = (row) ->
 
 
 make_runner = (dbname,description,css,method) -> (nl,gnum,limit) ->
-  console.log 'runner', dbname, description, css, method, nl, gnum, limit
+  console.log 'runner', dbname, description, css, nl, gnum, limit
 
   db = new PouchDB "#{window.location.protocol}//#{window.location.host}/#{dbname}"
 
@@ -166,7 +166,7 @@ make_runner = (dbname,description,css,method) -> (nl,gnum,limit) ->
   db
   .put addon
   .catch (error) ->
-    console.error error
+    console.error 'ignored', error
     true
   .then ->
     run()
